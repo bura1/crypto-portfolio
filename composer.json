@@ -1,0 +1,17 @@
+{
+    "name": "tburic/portfolio",
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tomislav",
+            "email": "tomislavburic6@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "symfony/var-dumper": "^6.1"
+    }
+}
