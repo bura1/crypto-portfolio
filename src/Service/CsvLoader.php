@@ -4,11 +4,16 @@ namespace Service;
 
 class CsvLoader
 {
-    public function getData($file, $length = 1000, string $separator = ',', string $enclosure = "\"", string $escape = "\\")
+    public function getData(string $file, int $length = 0, string $separator = ',', string $enclosure = "\"", string $escape = "\\")
     {
-        $handle = fopen($file, 'rb');
-        $data = fgetcsv($handle, $length, $separator, $enclosure, $escape);
-        fclose($handle);
+        $data = [];
+
+        if (($handle = fopen($file, 'rb')) !== false) {
+            while (($row = fgetcsv($handle, $length, $separator, $enclosure, $escape)) !== false) {
+                $data[] = $row;
+            }
+            fclose($handle);
+        }
 
         return $data;
     }
