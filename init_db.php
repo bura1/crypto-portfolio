@@ -4,19 +4,24 @@ use Service\CsvLoader;
 
 require __DIR__.'/bootstrap.php';
 
-// Settings
-const DBNAME = 'portfolio';
+const DB_NAME = 'portfolio';
 
-// Create database
-if (!is_dir('database')) {
-    mkdir('database');
-}
-fopen('database/' . DBNAME . '.db', 'wb');
-$db = new PDO('sqlite:database/portfolio.db');
-
+$db = createDatabase(DB_NAME);
 createTables($db);
 $coins = getCoinsFromCsvFile();
 insertData($db, $coins);
+
+// Helper functions
+
+function createDatabase($dbName)
+{
+    if (!is_dir('database')) {
+        mkdir('database');
+    }
+    fopen('database/' . $dbName . '.db', 'wb');
+
+    return new PDO('sqlite:database/portfolio.db');
+}
 
 function createTables($dbi)
 {
