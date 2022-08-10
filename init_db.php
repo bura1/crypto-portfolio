@@ -5,7 +5,7 @@ use Service\CsvLoader;
 require __DIR__.'/bootstrap.php';
 
 const DB_NAME = 'portfolio';
-const CSV_FILE = 'files/tickers.csv';
+const CSV_FILE = 'files/currencies.csv';
 
 $db = createDatabase(DB_NAME);
 createTables($db);
@@ -56,6 +56,16 @@ function insertData($dbi, $allCoins)
 
     $dbi->exec(
         'INSERT INTO "coins" ("name", "symbol") VALUES ' . $coinsString
+    );
+
+    $dbi->exec(
+        'INSERT INTO "transactions" ("symbol", "value") VALUES
+         ("BTC", "0.001"),
+         ("XRP", "825"),
+         ("ETH", "1.25"),
+         ("ETH", "3.1"),
+         ("BTC", "0.78"),
+         ("SHIB", "115842597.4568")'
     );
 }
 
