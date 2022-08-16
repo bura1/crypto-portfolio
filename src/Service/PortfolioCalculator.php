@@ -30,6 +30,6 @@ class PortfolioCalculator
             }
         }
 
-        return $sum;
+        return array_filter($sum);
     }
 }

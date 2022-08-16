@@ -66,7 +66,8 @@ function insertData($dbi, $allCoins)
          ("ETH", "3.1"),
          ("BTC", "0.78"),
          ("SHIB", "115842597.4568"),
-         ("ETH", "-2.1")'
+         ("ETH", "-2.1"),
+         ("XRP", "-825")'
     );
 }
 
