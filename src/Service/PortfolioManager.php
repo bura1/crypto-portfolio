@@ -2,20 +2,28 @@
 
 namespace Service;
 
-class PortfolioCalculator
+use Http\NomicsApi;
+
+class PortfolioManager
 {
     private $transactions;
+    private $nomicsApiKey;
+    private $convert;
 
-    public function __construct($transactions)
+    public function __construct($transactions, $nomicsApiKey, $convert)
     {
         $this->transactions = $transactions;
+        $this->nomicsApiKey = $nomicsApiKey;
+        $this->convert = $convert;
     }
 
     public function getPortfolio()
     {
         $portfolio = $this->sumTransactions();
 
-        return $portfolio;
+        $portfolioWithPrice = $this->priceOfPortfolio($portfolio);
+
+        return $portfolioWithPrice;
     }
 
     public function sumTransactions()
@@ -31,5 +39,14 @@ class PortfolioCalculator
         }
 
         return array_filter($sum);
+    }
+
+    public function priceOfPortfolio($portfolio)
+    {
+        $nomics = new NomicsApi($this->nomicsApiKey);
+
+        dd($nomics->getDataForTickers('BTC,ETH,XRP', $this->convert));
+
+        //return $result;
     }
 }

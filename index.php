@@ -4,8 +4,9 @@ use Service\Container;
 
 require __DIR__.'/bootstrap.php';
 
-$container = new Container($configuration);
+$container = new Container($dbConfiguration);
 
-$portfolio = $container->getPortfolio();
+$portfolio = $container->getPortfolio($nomicsApiKey, 'USD');
 
 dd($portfolio);
+

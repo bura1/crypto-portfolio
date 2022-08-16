@@ -4,22 +4,22 @@ namespace Service;
 
 class Container
 {
-    private $configuration;
+    private $dbConfiguration;
     private $pdo;
     private $transactionsStorage;
     private $transactionsLoader;
     private $portfolioLoader;
 
-    public function __construct(array $configuration)
+    public function __construct(array $dbConfiguration)
     {
-        $this->configuration = $configuration;
+        $this->dbConfiguration = $dbConfiguration;
     }
 
     public function getPDO()
     {
         if ($this->pdo === null) {
             $this->pdo = new \PDO(
-                $this->configuration['db_dsn']
+                $this->dbConfiguration['db_dsn']
             );
 
             $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -46,10 +46,10 @@ class Container
         return $this->transactionsStorage;
     }
 
-    public function getPortfolio()
+    public function getPortfolio($nomicsApiKey, $convert)
     {
         if ($this->portfolioLoader === null) {
-            $this->portfolioLoader = new PortfolioCalculator($this->getTransactionsLoader()->getTransactions());
+            $this->portfolioLoader = new PortfolioManager($this->getTransactionsLoader()->getTransactions(), $nomicsApiKey, $convert);
         }
 
         return $this->portfolioLoader->getPortfolio();
