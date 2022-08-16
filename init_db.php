@@ -62,10 +62,11 @@ function insertData($dbi, $allCoins)
         'INSERT INTO "transactions" ("symbol", "value") VALUES
          ("BTC", "0.001"),
          ("XRP", "825"),
-         ("ETH", "1.25"),
+         ("ETH", "1.28"),
          ("ETH", "3.1"),
          ("BTC", "0.78"),
-         ("SHIB", "115842597.4568")'
+         ("SHIB", "115842597.4568"),
+         ("ETH", "-2.1")'
     );
 }
 

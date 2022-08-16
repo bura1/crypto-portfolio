@@ -8,6 +8,7 @@ class Container
     private $pdo;
     private $transactionsStorage;
     private $transactionsLoader;
+    private $portfolioLoader;
 
     public function __construct(array $configuration)
     {
@@ -43,5 +44,14 @@ class Container
         }
 
         return $this->transactionsStorage;
+    }
+
+    public function getPortfolio()
+    {
+        if ($this->portfolioLoader === null) {
+            $this->portfolioLoader = new PortfolioCalculator($this->getTransactionsLoader()->getTransactions());
+        }
+
+        return $this->portfolioLoader->getPortfolio();
     }
 }

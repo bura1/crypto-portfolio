@@ -6,6 +6,6 @@ require __DIR__.'/bootstrap.php';
 
 $container = new Container($configuration);
 
-$transactions = $container->getTransactionsLoader();
+$portfolio = $container->getPortfolio();
 
-dd($transactions->getTransactions());
+dd($portfolio);
