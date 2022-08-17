@@ -45,8 +45,26 @@ class PortfolioManager
     {
         $nomics = new NomicsApi($this->nomicsApiKey);
 
-        dd($nomics->getDataForTickers('BTC,ETH,XRP', $this->convert));
+        $tickers = implode(',', array_keys($portfolio));
+        $requestResult = json_decode($nomics->getDataForTickers($tickers, $this->convert), true);
 
-        //return $result;
+        $items = [];
+        foreach ($portfolio as $ticker => $amount) {
+            $value = $this->valueOfCoin($ticker, $amount, $requestResult);
+            $items[] = [$ticker, $amount, $value];
+        }
+
+        return $items;
+    }
+
+    public function valueOfCoin($ticker, $amount, $requestResult)
+    {
+        foreach ($requestResult as $row) {
+            if ($row['symbol'] === $ticker) {
+                return (double) ($row['price'] * $amount);
+            }
+        }
+
+        return 0;
     }
 }
